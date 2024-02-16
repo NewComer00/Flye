@@ -3272,7 +3272,7 @@ PKG_CONFIG=""
 need_crypto=no
 pc_requires=
 static_LDFLAGS=$LDFLAGS
-static_LIBS='-lpthread -lz -lm'
+static_LIBS='-lpthread -lz -lm -lregex -ltre -pipe -lintl -liconv'
 private_LIBS=$LDFLAGS
 
 # Check whether --enable-bz2 was given.

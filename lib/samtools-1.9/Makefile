@@ -27,7 +27,7 @@ CPPFLAGS =
 #CFLAGS   = -g -Wall -O2 -pedantic -std=c99 -D_XOPEN_SOURCE=600
 CFLAGS   = -g -Wall -O2
 LDFLAGS  =
-LIBS     = -lregex -ltre -pipe -lintl -liconv
+LIBS     =
 
 LZ4DIR   = ./lz4
 LZ4_CPPFLAGS = -I$(LZ4DIR)
