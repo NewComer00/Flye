@@ -2,7 +2,7 @@
 
 CXXFLAGS += -Wall -Wextra -pthread -std=c++11 -g
 CXXFLAGS += -Wno-missing-field-initializers
-LDFLAGS += -pthread -std=c++11 -rdynamic
+LDFLAGS += -pthread -std=c++11
 
 MODULES_BIN := ${BIN_DIR}/flye-modules
 
@@ -13,7 +13,7 @@ profile: release
 release: CXXFLAGS += -O3 -DNDEBUG
 release: flye-modules
 
-SANITIZE_FLAGS += -D_GLIBCXX_SANITIZE_VECTOR -U_FORTIFY_SOURCE -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined
+SANITIZE_FLAGS += -D_GLIBCXX_SANITIZE_VECTOR -U_FORTIFY_SOURCE -fno-omit-frame-pointer
 #SANITIZE_FLAGS += -fsanitize=thread -fsanitize=leak -fsanitize=undefined
 debug: CXXFLAGS += -Og ${SANITIZE_FLAGS}
 #debug: CXXFLAGS += -D_GLIBCXX_DEBUG

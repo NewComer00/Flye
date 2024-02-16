@@ -40,7 +40,7 @@ from flye.utils.utils import get_median
 
 logger = logging.getLogger()
 
-SAMTOOLS_BIN = "flye-samtools"
+SAMTOOLS_BIN = "flye-samtools.exe"
 Alignment = namedtuple("Alignment", ["qry_id", "trg_id", "qry_start", "qry_end",
                                      "qry_sign", "qry_len", "trg_start",
                                      "trg_end", "trg_sign", "trg_len",

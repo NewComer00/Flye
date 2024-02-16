@@ -13,7 +13,7 @@ import os
 
 from flye.utils.utils import which
 
-ASSEMBLE_BIN = "flye-modules"
+ASSEMBLE_BIN = "flye-modules.exe"
 logger = logging.getLogger()
 
 

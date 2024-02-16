@@ -9,7 +9,7 @@ export MINIMAP2_DIR = ${ROOT_DIR}/lib/minimap2
 export SAMTOOLS_DIR = ${ROOT_DIR}/lib/samtools-1.9
 
 export CXXFLAGS += ${LIBCUCKOO} ${INTERVAL_TREE} ${LEMON} -I${MINIMAP2_DIR}
-export LDFLAGS += -lz -L${MINIMAP2_DIR} -lminimap2
+export LDFLAGS += -lz -L${MINIMAP2_DIR} -lminimap2 -static
 
 ifeq ($(shell uname -m),arm64)
 	export arm_neon=1

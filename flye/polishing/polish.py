@@ -25,7 +25,7 @@ from flye.six import iteritems
 from flye.six.moves import range
 
 
-POLISH_BIN = "flye-modules"
+POLISH_BIN = "flye-modules.exe"
 
 logger = logging.getLogger()
 

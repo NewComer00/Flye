@@ -315,7 +315,7 @@ bool RepeatResolver::checkPathConsistency(const GraphEdge* checkEdge, GraphEdge*
 
 	
 	//construct a set of safe edges, definted by the read paths between the two uniqe edge candidates
-	int minSafeFreq = std::max(outSpans[maxConn].size() / MIN_FREQ_RATE, 1UL);
+	int minSafeFreq = std::max(outSpans[maxConn].size() / MIN_FREQ_RATE, 1ULL);
 	std::unordered_map<GraphEdge*, int> safeEdgesFrequencies;
 	for (auto edge : visitedEdges[maxConn])
 	{
@@ -365,7 +365,7 @@ bool RepeatResolver::checkPathConsistency(const GraphEdge* checkEdge, GraphEdge*
 	}
 
 	//int threshold = std::max(checkEdge->meanCoverage / INCONSISTENT_HANG_RATE, 1);
-	int threshold = std::max((outSpans[maxConn].size() + hangingPaths.size()) / INCONSISTENT_HANG_RATE, 1UL);
+	int threshold = std::max((outSpans[maxConn].size() + hangingPaths.size()) / INCONSISTENT_HANG_RATE, 1ULL);
 	if (inconsistentHangs > threshold)
 	{
 		Logger::get().debug() << "SuspiciousOverhangs: " << checkEdge->edgeId.signedId();

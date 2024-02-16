@@ -7,14 +7,22 @@
 *.egg-info
 build
 dist
+tags
 
 bin/flye-modules
 bin/flye-minimap2
 bin/flye-samtools
+bin/flye-modules.exe
+bin/flye-minimap2.exe
+bin/flye-samtools.exe
+bin/bash.exe
+bin/msys-2.0.dll
 
 lib/minimap2/minimap2
+lib/minimap2/minimap2.exe
 
 lib/samtools-1.9/samtools
+lib/samtools-1.9/samtools.exe
 lib/samtools-1.9/htslib-1.10/hts-object-files
 lib/samtools-1.9/htslib-1.10/htslib_static.mk
 lib/samtools-1.9/htslib-1.10/version.h
@@ -31,3 +39,5 @@ lib/samtools-1.9/htslib-1.9/config.mk
 lib/samtools-1.9/htslib-1.9/config.status
 lib/samtools-1.9/htslib-1.9/htslib.pc.tmp
 lib/samtools-1.9/htslib-1.9/htslib_static.mk
+
+flye_toy_test/

@@ -58,7 +58,7 @@ class MakeInstall(SetuptoolsInstall):
 
         build_dir = os.path.join(script_dir, "bin")
         install_dir = self.install_scripts
-        bin_files = ['flye-modules', 'flye-minimap2', 'flye-samtools']
+        bin_files = ['flye-modules.exe', 'flye-minimap2.exe', 'flye-samtools.exe']
         for file in bin_files:
             if not os.path.isfile(os.path.join(build_dir, file)):
                 sys.exit('Error: binary not found: ' + file)

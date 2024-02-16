@@ -7,7 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include <sstream>
-#include <execinfo.h>
+/* #include <execinfo.h> */
 
 #include "logger.h"
 
@@ -68,14 +68,14 @@ inline bool fileExists(const std::string& path)
 
 inline void segfaultHandler(int signal __attribute__((unused)))
 {
-	void *stackArray[20];
-	size_t size = backtrace(stackArray, 10);
-	Logger::get().error() << "Segmentation fault! Backtrace:";
-	char** backtrace = backtrace_symbols(stackArray, size);
-	for (size_t i = 0; i < size; ++i)
-	{
-		Logger::get().error() << "\t" << backtrace[i];
-	}
+	/* void *stackArray[20]; */
+	/* size_t size = backtrace(stackArray, 10); */
+	/* Logger::get().error() << "Segmentation fault! Backtrace:"; */
+	/* char** backtrace = backtrace_symbols(stackArray, size); */
+	/* for (size_t i = 0; i < size; ++i) */
+	/* { */
+	/* 	Logger::get().error() << "\t" << backtrace[i]; */
+	/* } */
 	abort();
 }
 
@@ -96,13 +96,13 @@ inline void exceptionHandler()
     }
 	catch (...) {}
 
-	void *stackArray[20];
-	size_t size = backtrace(stackArray, 10);
-	char** backtrace = backtrace_symbols(stackArray, size);
-	for (size_t i = 0; i < size; ++i)
-	{
-		Logger::get().error() << "\t" << backtrace[i];
-	}
+	/* void *stackArray[20]; */
+	/* size_t size = backtrace(stackArray, 10); */
+	/* char** backtrace = backtrace_symbols(stackArray, size); */
+	/* for (size_t i = 0; i < size; ++i) */
+	/* { */
+	/* 	Logger::get().error() << "\t" << backtrace[i]; */
+	/* } */
 	abort();
 }
 

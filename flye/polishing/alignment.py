@@ -9,6 +9,7 @@ Runs Minimap2 and parses its output
 from __future__ import absolute_import
 from __future__ import division
 import os
+from tempfile import NamedTemporaryFile
 from collections import namedtuple
 import subprocess
 import logging
@@ -23,8 +24,8 @@ from flye.six.moves import range
 
 
 logger = logging.getLogger()
-MINIMAP_BIN = "flye-minimap2"
-SAMTOOLS_BIN = "flye-samtools"
+MINIMAP_BIN = "flye-minimap2.exe"
+SAMTOOLS_BIN = "flye-samtools.exe"
 
 ContigInfo = namedtuple("ContigInfo", ["id", "length", "type"])
 
@@ -34,7 +35,7 @@ def check_binaries():
         raise AlignmentException("minimap2 is not installed")
     if not which(SAMTOOLS_BIN):
         raise AlignmentException("samtools is not installed")
-    if not which("sort"):
+    if not which("sort.exe"):
         raise AlignmentException("UNIX sort utility is not available")
 
 
@@ -258,23 +259,27 @@ def _run_minimap(reference_file, reads_files, num_proc, reads_type, out_file):
     #--secondary-seq = custom option to output SEQ for seqcondary alignment with hard clipping
     #-L: move CIGAR strings for ultra-long reads to the separate tag
     #-Q don't output fastq quality
+    fp_tmp_bam = NamedTemporaryFile(delete=False)
+    tmp_bam = fp_tmp_bam.name
     tmp_prefix = os.path.join(os.path.dirname(out_file),
                               "sort_" + datetime.datetime.now().strftime("%y%m%d_%H%M%S"))
     cmdline.extend(["-a", "-p", "0.5", "-N", "10", "--sam-hit-only", "-L", "-K", BATCH,
                     "-z", "1000", "-Q", "--secondary-seq", "-I", "64G"])
-    cmdline.extend(["|", SAMTOOLS_BIN, "view", "-T", "'" + reference_file + "'", "-u", "-"])
-    cmdline.extend(["|", SAMTOOLS_BIN, "sort", "-T", "'" + tmp_prefix + "'", "-O", "bam",
+    cmdline.extend(["|", SAMTOOLS_BIN, "view", "-T", "'" + reference_file + "'", "-u", "-o", "'" + tmp_bam + "'"])
+    cmdline.extend(["&&", SAMTOOLS_BIN, "sort", "-T", "'" + tmp_prefix + "'", "-O", "bam",
                     "-@", SORT_THREADS, "-l", "1", "-m", SORT_MEM])
-    cmdline.extend(["-o", "'" + out_file + "'"])
+    cmdline.extend(["-o", "'" + out_file + "'", "'" + tmp_bam + "'"])
+    cmdline.extend(["&&", SAMTOOLS_BIN, "index", "-@", "4", "'" + out_file + "'"])
+    fp_tmp_bam.close()
+    os.unlink(tmp_bam)
 
     #logger.debug("Running: " + " ".join(cmdline))
     try:
         devnull = open(os.devnull, "wb")
-        subprocess.check_call(["/bin/bash", "-c",
+        subprocess.check_call(["bash", "-c",
                               "set -eo pipefail; " + " ".join(cmdline)],
                               stderr=open(stderr_file, "w"),
                               stdout=open(os.devnull, "w"))
-        subprocess.check_call(SAMTOOLS_BIN + " index -@ 4 " + "'" + out_file + "'", shell=True)
         #os.remove(stderr_file)
 
     except (subprocess.CalledProcessError, OSError) as e:

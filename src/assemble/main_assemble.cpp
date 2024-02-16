@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <cmath>
-#include <execinfo.h>
+/* #include <execinfo.h> */
 
 #include "../sequence/vertex_index.h"
 #include "../sequence/sequence_container.h"
