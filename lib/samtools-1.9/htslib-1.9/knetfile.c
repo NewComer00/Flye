@@ -556,7 +556,7 @@ off_t knet_seek(knetFile *fp, off_t off, int whence)
 	if (whence == SEEK_SET && off == fp->offset) return 0;
 	if (fp->type == KNF_TYPE_LOCAL) {
 		/* Be aware that lseek() returns the offset after seeking, while fseek() returns zero on success. */
-		off_t offset = lseek(fp->fd, off, whence);
+		off_t offset = _lseeki64(fp->fd, off, whence);
 		if (offset == -1) return -1;
 		fp->offset = offset;
 		return fp->offset;

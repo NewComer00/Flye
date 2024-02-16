@@ -548,7 +548,7 @@ static ssize_t fd_write(hFILE *fpv, const void *buffer, size_t nbytes)
 static off_t fd_seek(hFILE *fpv, off_t offset, int whence)
 {
     hFILE_fd *fp = (hFILE_fd *) fpv;
-    return lseek(fp->fd, offset, whence);
+    return _lseeki64(fp->fd, offset, whence);
 }
 
 static int fd_flush(hFILE *fpv)

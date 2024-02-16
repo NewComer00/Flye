@@ -300,7 +300,7 @@ mFILE *mfreopen(const char *path, const char *mode_str, FILE *fp) {
                 mf->data = mfload(fp, path, &mf->size, b);
                 mf->alloced = mf->size;
                 if (!a)
-                    fseek(fp, 0, SEEK_SET);
+                    _fseeki64(fp, 0, SEEK_SET);
             }
         }
     } else if (w) {
@@ -320,7 +320,7 @@ mFILE *mfreopen(const char *path, const char *mode_str, FILE *fp) {
 
     if (a) {
         mf->flush_pos = mf->size;
-        fseek(fp, 0, SEEK_END);
+        _fseeki64(fp, 0, SEEK_END);
     }
 
     return mf;
@@ -435,7 +435,7 @@ void *mfsteal(mFILE *mf, size_t *size_out) {
  * in-memory index. NB we can seek on stdin or stdout even provided we
  * haven't been flushing.
  */
-int mfseek(mFILE *mf, long offset, int whence) {
+int mfseek(mFILE *mf, long long offset, int whence) {
     switch (whence) {
     case SEEK_SET:
         mf->offset = offset;
@@ -455,7 +455,7 @@ int mfseek(mFILE *mf, long offset, int whence) {
     return 0;
 }
 
-long mftell(mFILE *mf) {
+long long mftell(mFILE *mf) {
     return mf->offset;
 }
 
@@ -472,7 +472,7 @@ void mrewind(mFILE *mf) {
  * If offset is -1 then the file is truncated to be the current file
  * offset.
  */
-void mftruncate(mFILE *mf, long offset) {
+void mftruncate(mFILE *mf, long long offset) {
     mf->size = offset != -1 ? offset : mf->offset;
     if (mf->offset > mf->size)
         mf->offset = mf->size;
@@ -614,15 +614,15 @@ int mfflush(mFILE *mf) {
         if (mf->flush_pos < mf->size) {
             size_t bytes = mf->size - mf->flush_pos;
             if (!(mf->mode & MF_MODEX)) {
-                fseek(mf->fp, mf->flush_pos, SEEK_SET);
+                _fseeki64(mf->fp, mf->flush_pos, SEEK_SET);
             }
             if (fwrite(mf->data + mf->flush_pos, 1, bytes, mf->fp) < bytes)
                 return -1;
             if (0 != fflush(mf->fp))
                 return -1;
         }
-        if (ftell(mf->fp) != -1 &&
-            ftruncate(fileno(mf->fp), ftell(mf->fp)) == -1)
+        if (_ftelli64(mf->fp) != -1 &&
+            ftruncate(fileno(mf->fp), _ftelli64(mf->fp)) == -1)
             return -1;
         mf->flush_pos = mf->size;
     }

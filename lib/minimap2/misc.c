@@ -64,8 +64,8 @@ int gettimeofday(struct timeval * tp, struct timezone *tzp)
     ularge.LowPart = file_time.dwLowDateTime;
     ularge.HighPart = file_time.dwHighDateTime;
 
-    tp->tv_sec = (long) ((ularge.QuadPart - epoch) / 10000000L);
-    tp->tv_usec = (long) (system_time.wMilliseconds * 1000);
+    tp->tv_sec = (long long) ((ularge.QuadPart - epoch) / 10000000L);
+    tp->tv_usec = (long long) (system_time.wMilliseconds * 1000);
 
     return 0;
 }
@@ -88,7 +88,7 @@ double cputime()
 	return kernelModeTime + userModeTime;
 }
 
-long peakrss(void) { return 0; }
+long long peakrss(void) { return 0; }
 #else
 #include <sys/resource.h>
 #include <sys/time.h>
@@ -100,7 +100,7 @@ double cputime(void)
 	return r.ru_utime.tv_sec + r.ru_stime.tv_sec + 1e-6 * (r.ru_utime.tv_usec + r.ru_stime.tv_usec);
 }
 
-long peakrss(void)
+long long peakrss(void)
 {
 	struct rusage r;
 	getrusage(RUSAGE_SELF, &r);

@@ -16,21 +16,21 @@ struct kt_for_t;
 
 typedef struct {
 	struct kt_for_t *t;
-	long i;
+	long long i;
 } ktf_worker_t;
 
 typedef struct kt_for_t {
 	int n_threads;
-	long n;
+	long long n;
 	ktf_worker_t *w;
-	void (*func)(void*,long,int);
+	void (*func)(void*,long long,int);
 	void *data;
 } kt_for_t;
 
-static inline long steal_work(kt_for_t *t)
+static inline long long steal_work(kt_for_t *t)
 {
 	int i, min_i = -1;
-	long k, min = LONG_MAX;
+	long long k, min = LLONG_MAX;
 	for (i = 0; i < t->n_threads; ++i)
 		if (min > t->w[i].i) min = t->w[i].i, min_i = i;
 	k = __sync_fetch_and_add(&t->w[min_i].i, t->n_threads);
@@ -40,7 +40,7 @@ static inline long steal_work(kt_for_t *t)
 static void *ktf_worker(void *data)
 {
 	ktf_worker_t *w = (ktf_worker_t*)data;
-	long i;
+	long long i;
 	for (;;) {
 		i = __sync_fetch_and_add(&w->i, w->t->n_threads);
 		if (i >= w->t->n) break;
@@ -51,7 +51,7 @@ static void *ktf_worker(void *data)
 	pthread_exit(0);
 }
 
-void kt_for(int n_threads, void (*func)(void*,long,int), void *data, long n)
+void kt_for(int n_threads, void (*func)(void*,long long,int), void *data, long long n)
 {
 	if (n_threads > 1) {
 		int i;
@@ -66,7 +66,7 @@ void kt_for(int n_threads, void (*func)(void*,long,int), void *data, long n)
 		for (i = 0; i < n_threads; ++i) pthread_join(tid[i], 0);
 		free(tid); free(t.w);
 	} else {
-		long j;
+		long long j;
 		for (j = 0; j < n; ++j) func(data, j, 0);
 	}
 }

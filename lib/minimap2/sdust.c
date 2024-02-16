@@ -109,7 +109,7 @@ static void find_perfect(void *km, perf_intv_v *P, const kdq_t(int) *w, int T, i
 {
 	int c[SD_WTOT], r = rv, i, max_r = 0, max_l = 0;
 	memcpy(c, cv, SD_WTOT * sizeof(int));
-	for (i = (long)kdq_size(w) - L - 1; i >= 0; --i) {
+	for (i = (long long)kdq_size(w) - L - 1; i >= 0; --i) {
 		int j, t = kdq_at(w, i), new_r, new_l;
 		r += c[t]++;
 		new_r = r, new_l = kdq_size(w) - i - 1;

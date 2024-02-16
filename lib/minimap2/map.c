@@ -367,7 +367,7 @@ void mm_map_frag(const mm_idx_t *mi, int n_segs, const int *qlens, const char **
 	if (b->km) {
 		km_stat(b->km, &kmst);
 		if (mm_dbg_flag & MM_DBG_PRINT_QNAME)
-			fprintf(stderr, "QM\t%s\t%d\tcap=%ld,nCore=%ld,largest=%ld\n", qname, qlen_sum, kmst.capacity, kmst.n_cores, kmst.largest);
+			fprintf(stderr, "QM\t%s\t%d\tcap=%lld,nCore=%lld,largest=%lld\n", qname, qlen_sum, kmst.capacity, kmst.n_cores, kmst.largest);
 		assert(kmst.n_blocks == kmst.n_cores); // otherwise, there is a memory leak
 		if (kmst.largest > 1U<<28 || (opt->cap_kalloc > 0 && kmst.capacity > opt->cap_kalloc)) {
 			if (mm_dbg_flag & MM_DBG_PRINT_QNAME)
@@ -411,7 +411,7 @@ typedef struct {
 	mm_tbuf_t **buf;
 } step_t;
 
-static void worker_for(void *_data, long i, int tid) // kt_for() callback
+static void worker_for(void *_data, long long i, int tid) // kt_for() callback
 {
     step_t *s = (step_t*)_data;
 	int qlens[MM_MAX_SEG], j, off = s->seg_off[i], pe_ori = s->p->opt->pe_ori;

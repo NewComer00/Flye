@@ -117,8 +117,8 @@ void mm_idx_stat(const mm_idx_t *mi)
 				if (kh_key(h, k)&1) ++n1;
 			}
 	}
-	fprintf(stderr, "[M::%s::%.3f*%.2f] distinct minimizers: %d (%.2f%% are singletons); average occurrences: %.3lf; average spacing: %.3lf; total length: %ld\n",
-			__func__, realtime() - mm_realtime0, cputime() / (realtime() - mm_realtime0), n, 100.0*n1/n, (double)sum / n, (double)len / sum, (long)len);
+	fprintf(stderr, "[M::%s::%.3f*%.2f] distinct minimizers: %d (%.2f%% are singletons); average occurrences: %.3lf; average spacing: %.3lf; total length: %lld\n",
+			__func__, realtime() - mm_realtime0, cputime() / (realtime() - mm_realtime0), n, 100.0*n1/n, (double)sum / n, (double)len / sum, (long long)len);
 }
 
 int mm_idx_index_name(mm_idx_t *mi)
@@ -210,7 +210,7 @@ int32_t mm_idx_cal_max_occ(const mm_idx_t *mi, float f)
  * Sort and generate hash tables *
  *********************************/
 
-static void worker_post(void *g, long i, int tid)
+static void worker_post(void *g, long long i, int tid)
 {
 	int n, n_keys;
 	size_t j, start_a, start_p;
