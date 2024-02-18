@@ -6,7 +6,7 @@ OBJS=		kthread.o kalloc.o misc.o bseq.o sketch.o sdust.o options.o index.o \
 			ksw2_ll_sse.o
 PROG=		minimap2
 PROG_EXTRA=	sdust minimap2-lite
-LIBS=		-lm -lz -lpthread
+LIBS=		-lm -lz -lpthread -static
 
 ifneq ($(aarch64),)
 	arm_neon=1
