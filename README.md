@@ -14,20 +14,106 @@ Building Requirements
 Local building (without installation)
 -------------------------------------
 
-You may use the package locally without system installation.
-To get and compile the latest git version, run:
-
-    git clone https://github.com/NewComer00/Flye-win32 --depth 1
-    cd Flye
-    make
+Get inside your `MSYS2 UCRT64` environment and build Flye-win32 from source:
+```sh
+git clone https://github.com/NewComer00/Flye-win32 --depth 1
+cd Flye-win32
+make
+```
 
 Then, Flye will be available as:
-
-    python bin/flye
+```sh
+# you can also run this command outside the MSYS2 UCRT64 environment
+# with PowerShell/CMD and Windows native Python
+python bin/flye
+```
 
 Optionally, run some tests to ensure that installation was successful:
+```sh
+# you can also run this command outside the MSYS2 UCRT64 environment
+# with PowerShell/CMD and Windows native Python
+python flye/tests/test_toy.py
+```
 
-    python flye/tests/test_toy.py
+<details>
+<summary>Show the log of test script on PowerShell</summary>
+
+```powershell
+PS D:\msys64\home\AI\Flye-win32> python flye/tests/test_toy.py
+Running toy test:
+
+[2024-02-18 17:51:22] INFO: Starting Flye 2.9.3-b1797
+[2024-02-18 17:51:22] INFO: >>>STAGE: configure
+[2024-02-18 17:51:22] INFO: Configuring run
+[2024-02-18 17:51:22] INFO: Total read length: 8397200
+[2024-02-18 17:51:22] INFO: Input genome size: 500000
+[2024-02-18 17:51:22] INFO: Estimated coverage: 16
+[2024-02-18 17:51:22] INFO: Reads N50/N90: 2700 / 1382
+[2024-02-18 17:51:22] INFO: Selected minimum overlap: 1000
+[2024-02-18 17:51:22] INFO: >>>STAGE: assembly
+[2024-02-18 17:51:22] INFO: Assembling disjointigs
+[2024-02-18 17:51:22] INFO: Reading sequences
+[2024-02-18 17:51:22] INFO: Building minimizer index
+[2024-02-18 17:51:22] INFO: Pre-calculating index storage
+0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+[2024-02-18 17:51:22] INFO: Filling index
+0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+[2024-02-18 17:51:22] INFO: Extending reads
+[2024-02-18 17:51:25] INFO: Overlap-based coverage: 15
+[2024-02-18 17:51:25] INFO: Median overlap divergence: 0.0138191
+0% 10% 20% 50% 90% 100%
+[2024-02-18 17:51:25] INFO: Assembled 6 disjointigs
+[2024-02-18 17:51:25] INFO: Generating sequence
+0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+[2024-02-18 17:51:25] INFO: Filtering contained disjointigs
+0% 10% 30% 50% 60% 80% 100%
+[2024-02-18 17:51:25] INFO: Contained seqs: 1
+[2024-02-18 17:51:25] INFO: >>>STAGE: consensus
+[2024-02-18 17:51:25] INFO: Running Minimap2
+[2024-02-18 17:51:30] INFO: Computing consensus
+[2024-02-18 17:51:34] INFO: Alignment error rate: 0.018129
+[2024-02-18 17:51:34] INFO: >>>STAGE: repeat
+[2024-02-18 17:51:34] INFO: Building and resolving repeat graph
+[2024-02-18 17:51:34] INFO: Parsing disjointigs
+[2024-02-18 17:51:34] INFO: Building repeat graph
+0% 20% 40% 60% 80% 100%
+[2024-02-18 17:51:34] INFO: Median overlap divergence: 0.00338524
+[2024-02-18 17:51:34] INFO: Parsing reads
+[2024-02-18 17:51:34] INFO: Aligning reads to the graph
+0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+[2024-02-18 17:51:34] INFO: Aligned read sequence: 8305781 / 8396200 (0.989231)
+[2024-02-18 17:51:34] INFO: Median overlap divergence: 0.00694442
+[2024-02-18 17:51:34] INFO: Mean edge coverage: 19
+[2024-02-18 17:51:34] INFO: Simplifying the graph
+[2024-02-18 17:51:34] INFO: >>>STAGE: contigger
+[2024-02-18 17:51:34] INFO: Generating contigs
+[2024-02-18 17:51:34] INFO: Reading sequences
+[2024-02-18 17:51:34] INFO: Generated 4 contigs
+[2024-02-18 17:51:34] INFO: Added 0 scaffold connections
+[2024-02-18 17:51:34] INFO: >>>STAGE: polishing
+[2024-02-18 17:51:34] INFO: Polishing genome (1/1)
+[2024-02-18 17:51:34] INFO: Running minimap2
+[2024-02-18 17:51:35] INFO: Separating alignment into bubbles
+[2024-02-18 17:51:40] INFO: Alignment error rate: 0.009640
+[2024-02-18 17:51:40] INFO: Correcting bubbles
+0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+[2024-02-18 17:51:44] INFO: >>>STAGE: finalize
+[2024-02-18 17:51:44] INFO: Assembly statistics:
+
+        Total length:   417315
+        Fragments:      4
+        Fragments N50:  225779
+        Largest frg:    225779
+        Scaffolds:      0
+        Mean coverage:  20
+
+[2024-02-18 17:51:44] INFO: Final assembly: D:\msys64\home\AI\Flye-win32\flye_toy_test\assembly.fasta
+
+TEST SUCCESSFUL
+PS D:\msys64\home\AI\Flye-win32>
+```
+
+</details>
 
 Flye assembler
 ==============
