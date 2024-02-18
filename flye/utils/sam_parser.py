@@ -342,7 +342,8 @@ class SynchronizedSamReader(object):
         if region_end is None:
             region_end = len(contig_str)
 
-        samtools_out = subprocess.Popen("{0} depth {1} -r '{2}:{3}-{4}' -a -m 0 -Q 10 -l 100"
+        # use " quotes on windows
+        samtools_out = subprocess.Popen("{0} depth {1} -r \"{2}:{3}-{4}\" -a -m 0 -Q 10 -l 100"
                                         .format(SAMTOOLS_BIN, self.aln_path,
                                                 _STR(parsed_contig), region_start, region_end),
                                         shell=True, stdout=subprocess.PIPE).stdout
@@ -362,7 +363,8 @@ class SynchronizedSamReader(object):
             region_end = len(contig_str)
         #logger.debug("Reading region: {0} {1} {2}".format(region_id, region_start, region_end))
 
-        aln_file = subprocess.Popen("{0} view {1} '{2}:{3}-{4}'"
+        # use " quotes on windows
+        aln_file = subprocess.Popen("{0} view {1} \"{2}:{3}-{4}\""
                                         .format(SAMTOOLS_BIN, self.aln_path,
                                                 _STR(parsed_contig), region_start, region_end),
                                     shell=True, stdout=subprocess.PIPE).stdout

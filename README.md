@@ -1,3 +1,34 @@
+Flye-win32
+==============
+
+Building Requirements
+---------------------
+
+* MSYS2 UCRT64 environment
+* Python 2.7 or 3.5+ (with setuptools package installed)
+* C++ compiler with C++11 support (GCC 4.8+ / Clang 3.3+ / Apple Clang 5.0+)
+* GNU make
+* Git
+* Core OS development headers (`mingw-w64-ucrt-x86_64-zlib`, `mingw-w64-ucrt-x86_64-dlfcn`, ...)
+
+Local building (without installation)
+-------------------------------------
+
+You may use the package locally without system installation.
+To get and compile the latest git version, run:
+
+    git clone https://github.com/NewComer00/Flye-win32 --depth 1 --branch dev
+    cd Flye
+    make
+
+Then, Flye will be available as:
+
+    python bin/flye
+
+Optionally, run some tests to ensure that installation was successful:
+
+    python flye/tests/test_toy.py
+
 Flye assembler
 ==============
 
