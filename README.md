@@ -5,7 +5,7 @@ Building Requirements
 ---------------------
 
 * MSYS2 UCRT64 environment
-* Python 2.7 or 3.5+ (with setuptools package installed)
+* Python 2.7 or 3.5+ (Windows native Python downloaded from website `www.python.org` or Python from `MSYS2 UCRT64` environment)
 * C++ compiler with C++11 support (GCC 4.8+ / Clang 3.3+ / Apple Clang 5.0+)
 * GNU make
 * Git
@@ -17,7 +17,7 @@ Local building (without installation)
 You may use the package locally without system installation.
 To get and compile the latest git version, run:
 
-    git clone https://github.com/NewComer00/Flye-win32 --depth 1 --branch dev
+    git clone https://github.com/NewComer00/Flye-win32 --depth 1
     cd Flye
     make
 
