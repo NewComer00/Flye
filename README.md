@@ -5,34 +5,58 @@ Building Requirements
 ---------------------
 
 * MSYS2 UCRT64 environment
-* Python 2.7 or 3.5+ (Windows native Python downloaded from website `www.python.org` or Python from `MSYS2 UCRT64` environment)
-* C++ compiler with C++11 support (GCC 4.8+ / Clang 3.3+ / Apple Clang 5.0+)
+* Python 2.7 or 3.5+
+* C++ compiler with C++11 support
 * GNU make
 * Git
-* Core OS development headers (`mingw-w64-ucrt-x86_64-zlib`, `mingw-w64-ucrt-x86_64-dlfcn`, ...)
+* Core OS development headers (zlib, dlfcn, ...)
 
-Local building (without installation)
--------------------------------------
+Building with MSYS2
+-------------------
 
-Get inside your `MSYS2 UCRT64` environment and build Flye-win32 from source:
+Get inside your `MSYS2 UCRT64` environment and install the required packages
+```sh
+# install GCC toolchain with basic libraries including zlib
+pacman -Sy mingw-w64-ucrt-x86_64-toolchain
+
+# install the rest packages
+pacman -Sy mingw-w64-ucrt-x86_64-python3
+pacman -Sy make git mingw-w64-ucrt-x86_64-dlfcn
+```
+
+Build Flye-win32 from source
 ```sh
 git clone https://github.com/NewComer00/Flye-win32 --depth 1
 cd Flye-win32
 make
 ```
 
-Then, Flye will be available as:
+Running with MSYS2
+------------------
+
+Then, Flye will be available as
 ```sh
-# you can also run this command outside the MSYS2 UCRT64 environment
-# with PowerShell/CMD and Windows native Python
 python bin/flye
 ```
 
-Optionally, run some tests to ensure that installation was successful:
+Optionally, run some tests to ensure that installation was successful
 ```sh
-# you can also run this command outside the MSYS2 UCRT64 environment
-# with PowerShell/CMD and Windows native Python
 python flye/tests/test_toy.py
+```
+
+Running on Native Windows
+-------------------------
+
+**IMPORTANT**: Please ensure `python.exe` and `bash.exe` is in the *PATH*. The former is available on [www.python.org](https://www.python.org), and the latter could be found in `MSYS2`, `Cygwin`, `Git for Windows`, `MSYS` or even `WSL/WSL2`.
+
+Run Flye on `PowerShell` or `CMD`
+```powershell
+python bin\flye
+```
+
+Run the test
+```powershell
+python flye\tests\test_toy.py
 ```
 
 <details>
@@ -114,6 +138,7 @@ PS D:\msys64\home\AI\Flye-win32>
 ```
 
 </details>
+
 
 Flye assembler
 ==============
