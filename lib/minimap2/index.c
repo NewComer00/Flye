@@ -623,7 +623,7 @@ mm_idx_t *mm_idx_reader_read(mm_idx_reader_t *r, int n_threads)
 
 int mm_idx_reader_eof(const mm_idx_reader_t *r) // TODO: in extremely rare cases, mm_bseq_eof() might not work
 {
-	return r->is_idx? (feof(r->fp.idx) || ftell(r->fp.idx) == r->idx_size) : mm_bseq_eof(r->fp.seq);
+	return r->is_idx? (feof(r->fp.idx) || _ftelli64(r->fp.idx) == r->idx_size) : mm_bseq_eof(r->fp.seq);
 }
 
 #include <ctype.h>
