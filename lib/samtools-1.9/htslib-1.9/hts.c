@@ -1107,14 +1107,14 @@ BGZF *hts_get_bgzfp(htsFile *fp)
     else
         return NULL;
 }
-int hts_useek(htsFile *fp, long uoffset, int where)
+int hts_useek(htsFile *fp, long long uoffset, int where)
 {
     if (fp->is_bgzf)
         return bgzf_useek(fp->fp.bgzf, uoffset, where);
     else
         return (hseek(fp->fp.hfile, uoffset, SEEK_SET) >= 0)? 0 : -1;
 }
-long hts_utell(htsFile *fp)
+long long hts_utell(htsFile *fp)
 {
     if (fp->is_bgzf)
         return bgzf_utell(fp->fp.bgzf);

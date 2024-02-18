@@ -110,7 +110,7 @@ int tbx_parse1(const tbx_conf_t *conf, int len, char *line, tbx_intv_t *intv)
                         int l = 0;
                         char *t;
                         for (s = line + b; s < line + i;) {
-                            long x = strtol(s, &t, 10);
+                            long long x = strtol(s, &t, 10);
                             char op = toupper_c(*t);
                             if (op == 'M' || op == 'D' || op == 'N') l += x;
                             s = t + 1;

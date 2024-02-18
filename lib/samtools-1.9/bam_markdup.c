@@ -139,7 +139,7 @@ static int32_t unclipped_other_start(int32_t op, char *cigar) {
     int32_t clipped = 0;
 
     while (*c && *c != '*') {
-        long num = 0;
+        long long num = 0;
 
         if (isdigit((int)*c)) {
             num = strtol(c, &c, 10);
@@ -189,7 +189,7 @@ static int32_t unclipped_other_end(int32_t op, char *cigar) {
     int skip = 1;
 
     while (*c && *c != '*') {
-        long num = 0;
+        long long num = 0;
 
         if (isdigit((int)*c)) {
             num = strtol(c, &c, 10);

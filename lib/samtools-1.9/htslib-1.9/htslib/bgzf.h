@@ -328,7 +328,7 @@ typedef struct __kstring_t {
      *
      *  Returns 0 on success and -1 on error.
      */
-    int bgzf_useek(BGZF *fp, long uoffset, int where) HTS_RESULT_USED;
+    int bgzf_useek(BGZF *fp, long long uoffset, int where) HTS_RESULT_USED;
 
     /**
      *  Position in uncompressed BGZF
@@ -337,7 +337,7 @@ typedef struct __kstring_t {
      *
      *  Returns the current offset on success and -1 on error.
      */
-    long bgzf_utell(BGZF *fp);
+    long long bgzf_utell(BGZF *fp);
 
     /**
      * Tell BGZF to build index while compressing.

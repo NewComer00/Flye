@@ -686,7 +686,7 @@ faidx_t *fai_load_format(const char *fn, enum fai_format_options format) {
 
 
 static char *fai_retrieve(const faidx_t *fai, const faidx1_t *val,
-                          uint64_t offset, long beg, long end, int *len) {
+                          uint64_t offset, long long beg, long long end, int *len) {
     char *s;
     size_t l;
     int c = 0;
@@ -724,12 +724,12 @@ static char *fai_retrieve(const faidx_t *fai, const faidx1_t *val,
 }
 
 
-static int fai_get_val(const faidx_t *fai, const char *str, int *len, faidx1_t *val, long *fbeg, long *fend) {
+static int fai_get_val(const faidx_t *fai, const char *str, int *len, faidx1_t *val, long long *fbeg, long long *fend) {
     char *s, *ep;
     size_t i, l, k, name_end;
     khiter_t iter;
     khash_t(s) *h;
-    long beg, end;
+    long long beg, end;
 
     beg = end = -1;
     h = fai->hash;
@@ -813,7 +813,7 @@ static int fai_get_val(const faidx_t *fai, const char *str, int *len, faidx1_t *
 char *fai_fetch(const faidx_t *fai, const char *str, int *len)
 {
     faidx1_t val;
-    long beg, end;
+    long long beg, end;
 
     if (fai_get_val(fai, str, len, &val, &beg, &end)) {
         return NULL;
@@ -826,7 +826,7 @@ char *fai_fetch(const faidx_t *fai, const char *str, int *len)
 
 char *fai_fetchqual(const faidx_t *fai, const char *str, int *len) {
     faidx1_t val;
-    long beg, end;
+    long long beg, end;
 
     if (fai_get_val(fai, str, len, &val, &beg, &end)) {
         return NULL;
@@ -901,7 +901,7 @@ char *faidx_fetch_seq(const faidx_t *fai, const char *c_name, int p_beg_i, int p
     }
 
     // Now retrieve the sequence
-    return fai_retrieve(fai, &val, val.seq_offset, p_beg_i, (long) p_end_i + 1, len);
+    return fai_retrieve(fai, &val, val.seq_offset, p_beg_i, (long long) p_end_i + 1, len);
 }
 
 
@@ -915,7 +915,7 @@ char *faidx_fetch_qual(const faidx_t *fai, const char *c_name, int p_beg_i, int 
     }
 
     // Now retrieve the sequence
-    return fai_retrieve(fai, &val, val.qual_offset, p_beg_i, (long) p_end_i + 1, len);
+    return fai_retrieve(fai, &val, val.qual_offset, p_beg_i, (long long) p_end_i + 1, len);
 }
 
 

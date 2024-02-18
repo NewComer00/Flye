@@ -883,9 +883,9 @@ int main(int argc, char **argv) {
     gettimeofday(&tv2, NULL);
 
     fprintf(stderr, "Took %ld microseconds, %5.1f MB/s\n",
-            (long)(tv2.tv_sec - tv1.tv_sec)*1000000 +
+            (long long)(tv2.tv_sec - tv1.tv_sec)*1000000 +
             tv2.tv_usec - tv1.tv_usec,
-            (double)bytes / ((long)(tv2.tv_sec - tv1.tv_sec)*1000000 +
+            (double)bytes / ((long long)(tv2.tv_sec - tv1.tv_sec)*1000000 +
                              tv2.tv_usec - tv1.tv_usec));
     return 0;
 }

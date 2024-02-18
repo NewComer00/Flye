@@ -1071,7 +1071,7 @@ int bam_mpileup(int argc, char *argv[])
         case 'b': file_list = optarg; break;
         case 'o': {
                 char *end;
-                long value = strtol(optarg, &end, 10);
+                long long value = strtol(optarg, &end, 10);
                 // Distinguish between -o INT and -o FILE (a bit of a hack!)
                 if (*end == '\0') {
                     mplp.openQ = value;

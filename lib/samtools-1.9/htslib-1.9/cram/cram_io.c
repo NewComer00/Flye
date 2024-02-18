@@ -1932,7 +1932,7 @@ int expand_cache_path(char *path, char *dir, char *fn) {
             cp++;
         } else if (*cp >= '0' && *cp <= '9') {
             char *endp;
-            long l;
+            long long l;
 
             l = strtol(cp, &endp, 10);
             l = MIN(l, strlen(fn));

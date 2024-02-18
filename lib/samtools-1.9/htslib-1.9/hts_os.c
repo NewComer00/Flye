@@ -30,7 +30,7 @@ DEALINGS IN THE SOFTWARE.  */
 #include "os/rand.c"
 #else
 #include <stdlib.h>
-void hts_srand48(long seed) { srand48(seed); }
+void hts_srand48(long long seed) { srand48(seed); }
 double hts_erand48(unsigned short xseed[3]) { return erand48(xseed); }
 double hts_drand48(void) { return drand48(); }
 double hts_lrand48(void) { return lrand48(); }

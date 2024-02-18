@@ -1525,7 +1525,7 @@ int bam_merge(int argc, char *argv[])
     int c, is_by_qname = 0, flag = 0, ret = 0, level = -1;
     char *fn_headers = NULL, *reg = NULL, mode[12];
     char *sort_tag = NULL;
-    long random_seed = (long)time(NULL);
+    long long random_seed = (long long)time(NULL);
     char** fn = NULL;
     int fn_size = 0;
 

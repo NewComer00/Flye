@@ -285,7 +285,7 @@ void round_buffer_flush(stats_t *stats, int64_t pos)
     }
 
     if ( pos < stats->cov_rbuf.pos )
-        error("Expected coordinates in ascending order, got %ld after %ld\n", pos,stats->cov_rbuf.pos);
+        error("Expected coordinates in ascending order, got %lld after %lld\n", pos,stats->cov_rbuf.pos);
 
     int ifrom = stats->cov_rbuf.start;
     int ito = round_buffer_lidx2ridx(stats->cov_rbuf.start,stats->cov_rbuf.size,stats->cov_rbuf.pos,pos-1);
@@ -318,7 +318,7 @@ void round_buffer_insert_read(round_buffer_t *rbuf, int64_t from, int64_t to)
     if ( to-from >= rbuf->size )
         error("The read length too big (%d), please increase the buffer length (currently %d)\n", to-from+1,rbuf->size);
     if ( from < rbuf->pos )
-        error("The reads are not sorted (%ld comes after %ld).\n", from,rbuf->pos);
+        error("The reads are not sorted (%lld comes after %lld).\n", from,rbuf->pos);
 
     int ifrom,ito,ibuf;
     ifrom = round_buffer_lidx2ridx(rbuf->start,rbuf->size,rbuf->pos,from);
@@ -584,75 +584,75 @@ void realloc_buffers(stats_t *stats, int seq_len)
 
     stats->quals_1st = realloc(stats->quals_1st, n*stats->nquals*sizeof(uint64_t));
     if ( !stats->quals_1st )
-        error("Could not realloc buffers, the sequence too long: %d (%ld)\n", seq_len,n*stats->nquals*sizeof(uint64_t));
+        error("Could not realloc buffers, the sequence too long: %d (%lld)\n", seq_len,n*stats->nquals*sizeof(uint64_t));
     memset(stats->quals_1st + stats->nbases*stats->nquals, 0, (n-stats->nbases)*stats->nquals*sizeof(uint64_t));
 
     stats->quals_2nd = realloc(stats->quals_2nd, n*stats->nquals*sizeof(uint64_t));
     if ( !stats->quals_2nd )
-        error("Could not realloc buffers, the sequence too long: %d (2x%ld)\n", seq_len,n*stats->nquals*sizeof(uint64_t));
+        error("Could not realloc buffers, the sequence too long: %d (2x%lld)\n", seq_len,n*stats->nquals*sizeof(uint64_t));
     memset(stats->quals_2nd + stats->nbases*stats->nquals, 0, (n-stats->nbases)*stats->nquals*sizeof(uint64_t));
 
     if ( stats->mpc_buf )
     {
         stats->mpc_buf = realloc(stats->mpc_buf, n*stats->nquals*sizeof(uint64_t));
         if ( !stats->mpc_buf )
-            error("Could not realloc buffers, the sequence too long: %d (%ld)\n", seq_len,n*stats->nquals*sizeof(uint64_t));
+            error("Could not realloc buffers, the sequence too long: %d (%lld)\n", seq_len,n*stats->nquals*sizeof(uint64_t));
         memset(stats->mpc_buf + stats->nbases*stats->nquals, 0, (n-stats->nbases)*stats->nquals*sizeof(uint64_t));
     }
 
     stats->acgtno_cycles_1st = realloc(stats->acgtno_cycles_1st, n*sizeof(acgtno_count_t));
     if ( !stats->acgtno_cycles_1st )
-        error("Could not realloc buffers, the sequence too long: %d (%ld)\n", seq_len, n*sizeof(acgtno_count_t));
+        error("Could not realloc buffers, the sequence too long: %d (%lld)\n", seq_len, n*sizeof(acgtno_count_t));
     memset(stats->acgtno_cycles_1st + stats->nbases, 0, (n-stats->nbases)*sizeof(acgtno_count_t));
 
     stats->acgtno_cycles_2nd = realloc(stats->acgtno_cycles_2nd, n*sizeof(acgtno_count_t));
     if ( !stats->acgtno_cycles_2nd )
-        error("Could not realloc buffers, the sequence too long: %d (%ld)\n", seq_len, n*sizeof(acgtno_count_t));
+        error("Could not realloc buffers, the sequence too long: %d (%lld)\n", seq_len, n*sizeof(acgtno_count_t));
     memset(stats->acgtno_cycles_2nd + stats->nbases, 0, (n-stats->nbases)*sizeof(acgtno_count_t));
 
     stats->read_lengths = realloc(stats->read_lengths, n*sizeof(uint64_t));
     if ( !stats->read_lengths )
-        error("Could not realloc buffers, the sequence too long: %d (%ld)\n", seq_len,n*sizeof(uint64_t));
+        error("Could not realloc buffers, the sequence too long: %d (%lld)\n", seq_len,n*sizeof(uint64_t));
     memset(stats->read_lengths + stats->nbases, 0, (n-stats->nbases)*sizeof(uint64_t));
 
     stats->read_lengths_1st = realloc(stats->read_lengths_1st, n*sizeof(uint64_t));
     if ( !stats->read_lengths_1st )
-        error("Could not realloc buffers, the sequence too long: %d (%ld)\n", seq_len,n*sizeof(uint64_t));
+        error("Could not realloc buffers, the sequence too long: %d (%lld)\n", seq_len,n*sizeof(uint64_t));
     memset(stats->read_lengths_1st + stats->nbases, 0, (n-stats->nbases)*sizeof(uint64_t));
 
     stats->read_lengths_2nd = realloc(stats->read_lengths_2nd, n*sizeof(uint64_t));
     if ( !stats->read_lengths_2nd )
-        error("Could not realloc buffers, the sequence too long: %d (%ld)\n", seq_len,n*sizeof(uint64_t));
+        error("Could not realloc buffers, the sequence too long: %d (%lld)\n", seq_len,n*sizeof(uint64_t));
     memset(stats->read_lengths_2nd + stats->nbases, 0, (n-stats->nbases)*sizeof(uint64_t));
 
     stats->insertions = realloc(stats->insertions, n*sizeof(uint64_t));
     if ( !stats->insertions )
-        error("Could not realloc buffers, the sequence too long: %d (%ld)\n", seq_len,n*sizeof(uint64_t));
+        error("Could not realloc buffers, the sequence too long: %d (%lld)\n", seq_len,n*sizeof(uint64_t));
     memset(stats->insertions + stats->nbases, 0, (n-stats->nbases)*sizeof(uint64_t));
 
     stats->deletions = realloc(stats->deletions, n*sizeof(uint64_t));
     if ( !stats->deletions )
-        error("Could not realloc buffers, the sequence too long: %d (%ld)\n", seq_len,n*sizeof(uint64_t));
+        error("Could not realloc buffers, the sequence too long: %d (%lld)\n", seq_len,n*sizeof(uint64_t));
     memset(stats->deletions + stats->nbases, 0, (n-stats->nbases)*sizeof(uint64_t));
 
     stats->ins_cycles_1st = realloc(stats->ins_cycles_1st, (n+1)*sizeof(uint64_t));
     if ( !stats->ins_cycles_1st )
-        error("Could not realloc buffers, the sequence too long: %d (%ld)\n", seq_len,(n+1)*sizeof(uint64_t));
+        error("Could not realloc buffers, the sequence too long: %d (%lld)\n", seq_len,(n+1)*sizeof(uint64_t));
     memset(stats->ins_cycles_1st + stats->nbases + 1, 0, (n-stats->nbases)*sizeof(uint64_t));
 
     stats->ins_cycles_2nd = realloc(stats->ins_cycles_2nd, (n+1)*sizeof(uint64_t));
     if ( !stats->ins_cycles_2nd )
-        error("Could not realloc buffers, the sequence too long: %d (%ld)\n", seq_len,(n+1)*sizeof(uint64_t));
+        error("Could not realloc buffers, the sequence too long: %d (%lld)\n", seq_len,(n+1)*sizeof(uint64_t));
     memset(stats->ins_cycles_2nd + stats->nbases + 1, 0, (n-stats->nbases)*sizeof(uint64_t));
 
     stats->del_cycles_1st = realloc(stats->del_cycles_1st, (n+1)*sizeof(uint64_t));
     if ( !stats->del_cycles_1st )
-        error("Could not realloc buffers, the sequence too long: %d (%ld)\n", seq_len,(n+1)*sizeof(uint64_t));
+        error("Could not realloc buffers, the sequence too long: %d (%lld)\n", seq_len,(n+1)*sizeof(uint64_t));
     memset(stats->del_cycles_1st + stats->nbases + 1, 0, (n-stats->nbases)*sizeof(uint64_t));
 
     stats->del_cycles_2nd = realloc(stats->del_cycles_2nd, (n+1)*sizeof(uint64_t));
     if ( !stats->del_cycles_2nd )
-        error("Could not realloc buffers, the sequence too long: %d (%ld)\n", seq_len,(n+1)*sizeof(uint64_t));
+        error("Could not realloc buffers, the sequence too long: %d (%lld)\n", seq_len,(n+1)*sizeof(uint64_t));
     memset(stats->del_cycles_2nd + stats->nbases + 1, 0, (n-stats->nbases)*sizeof(uint64_t));
 
     stats->nbases = n;
@@ -1320,29 +1320,29 @@ void output_stats(FILE *to, stats_t *stats, int sparse)
     fprintf(to, "# CHK, CRC32 of reads which passed filtering followed by addition (32bit overflow)\n");
     fprintf(to, "CHK\t%08x\t%08x\t%08x\n", stats->checksum.names,stats->checksum.reads,stats->checksum.quals);
     fprintf(to, "# Summary Numbers. Use `grep ^SN | cut -f 2-` to extract this part.\n");
-    fprintf(to, "SN\traw total sequences:\t%ld\n", (long)(stats->nreads_filtered+stats->nreads_1st+stats->nreads_2nd));  // not counting excluded seqs (and none of the below)
-    fprintf(to, "SN\tfiltered sequences:\t%ld\n", (long)stats->nreads_filtered);
-    fprintf(to, "SN\tsequences:\t%ld\n", (long)(stats->nreads_1st+stats->nreads_2nd));
+    fprintf(to, "SN\traw total sequences:\t%lld\n", (long long)(stats->nreads_filtered+stats->nreads_1st+stats->nreads_2nd));  // not counting excluded seqs (and none of the below)
+    fprintf(to, "SN\tfiltered sequences:\t%lld\n", (long long)stats->nreads_filtered);
+    fprintf(to, "SN\tsequences:\t%lld\n", (long long)(stats->nreads_1st+stats->nreads_2nd));
     fprintf(to, "SN\tis sorted:\t%d\n", stats->is_sorted ? 1 : 0);
-    fprintf(to, "SN\t1st fragments:\t%ld\n", (long)stats->nreads_1st);
-    fprintf(to, "SN\tlast fragments:\t%ld\n", (long)stats->nreads_2nd);
-    fprintf(to, "SN\treads mapped:\t%ld\n", (long)(stats->nreads_paired_and_mapped+stats->nreads_single_mapped));
-    fprintf(to, "SN\treads mapped and paired:\t%ld\t# paired-end technology bit set + both mates mapped\n", (long)stats->nreads_paired_and_mapped);
-    fprintf(to, "SN\treads unmapped:\t%ld\n", (long)stats->nreads_unmapped);
-    fprintf(to, "SN\treads properly paired:\t%ld\t# proper-pair bit set\n", (long)stats->nreads_properly_paired);
-    fprintf(to, "SN\treads paired:\t%ld\t# paired-end technology bit set\n", (long)stats->nreads_paired_tech);
-    fprintf(to, "SN\treads duplicated:\t%ld\t# PCR or optical duplicate bit set\n", (long)stats->nreads_dup);
-    fprintf(to, "SN\treads MQ0:\t%ld\t# mapped and MQ=0\n", (long)stats->nreads_mq0);
-    fprintf(to, "SN\treads QC failed:\t%ld\n", (long)stats->nreads_QCfailed);
-    fprintf(to, "SN\tnon-primary alignments:\t%ld\n", (long)stats->nreads_secondary);
-    fprintf(to, "SN\ttotal length:\t%ld\t# ignores clipping\n", (long)stats->total_len);
-    fprintf(to, "SN\ttotal first fragment length:\t%ld\t# ignores clipping\n", (long)stats->total_len_1st);
-    fprintf(to, "SN\ttotal last fragment length:\t%ld\t# ignores clipping\n", (long)stats->total_len_2nd);
-    fprintf(to, "SN\tbases mapped:\t%ld\t# ignores clipping\n", (long)stats->nbases_mapped);                 // the length of the whole read goes here, including soft-clips etc.
-    fprintf(to, "SN\tbases mapped (cigar):\t%ld\t# more accurate\n", (long)stats->nbases_mapped_cigar);   // only matched and inserted bases are counted here
-    fprintf(to, "SN\tbases trimmed:\t%ld\n", (long)stats->nbases_trimmed);
-    fprintf(to, "SN\tbases duplicated:\t%ld\n", (long)stats->total_len_dup);
-    fprintf(to, "SN\tmismatches:\t%ld\t# from NM fields\n", (long)stats->nmismatches);
+    fprintf(to, "SN\t1st fragments:\t%lld\n", (long long)stats->nreads_1st);
+    fprintf(to, "SN\tlast fragments:\t%lld\n", (long long)stats->nreads_2nd);
+    fprintf(to, "SN\treads mapped:\t%lld\n", (long long)(stats->nreads_paired_and_mapped+stats->nreads_single_mapped));
+    fprintf(to, "SN\treads mapped and paired:\t%lld\t# paired-end technology bit set + both mates mapped\n", (long long)stats->nreads_paired_and_mapped);
+    fprintf(to, "SN\treads unmapped:\t%lld\n", (long long)stats->nreads_unmapped);
+    fprintf(to, "SN\treads properly paired:\t%lld\t# proper-pair bit set\n", (long long)stats->nreads_properly_paired);
+    fprintf(to, "SN\treads paired:\t%lld\t# paired-end technology bit set\n", (long long)stats->nreads_paired_tech);
+    fprintf(to, "SN\treads duplicated:\t%lld\t# PCR or optical duplicate bit set\n", (long long)stats->nreads_dup);
+    fprintf(to, "SN\treads MQ0:\t%lld\t# mapped and MQ=0\n", (long long)stats->nreads_mq0);
+    fprintf(to, "SN\treads QC failed:\t%lld\n", (long long)stats->nreads_QCfailed);
+    fprintf(to, "SN\tnon-primary alignments:\t%lld\n", (long long)stats->nreads_secondary);
+    fprintf(to, "SN\ttotal length:\t%lld\t# ignores clipping\n", (long long)stats->total_len);
+    fprintf(to, "SN\ttotal first fragment length:\t%lld\t# ignores clipping\n", (long long)stats->total_len_1st);
+    fprintf(to, "SN\ttotal last fragment length:\t%lld\t# ignores clipping\n", (long long)stats->total_len_2nd);
+    fprintf(to, "SN\tbases mapped:\t%lld\t# ignores clipping\n", (long long)stats->nbases_mapped);                 // the length of the whole read goes here, including soft-clips etc.
+    fprintf(to, "SN\tbases mapped (cigar):\t%lld\t# more accurate\n", (long long)stats->nbases_mapped_cigar);   // only matched and inserted bases are counted here
+    fprintf(to, "SN\tbases trimmed:\t%lld\n", (long long)stats->nbases_trimmed);
+    fprintf(to, "SN\tbases duplicated:\t%lld\n", (long long)stats->total_len_dup);
+    fprintf(to, "SN\tmismatches:\t%lld\t# from NM fields\n", (long long)stats->nmismatches);
     fprintf(to, "SN\terror rate:\t%e\t# mismatches / bases mapped (cigar)\n", stats->nbases_mapped_cigar ? (float)stats->nmismatches/stats->nbases_mapped_cigar : 0);
     float avg_read_length = (stats->nreads_1st+stats->nreads_2nd)?stats->total_len/(stats->nreads_1st+stats->nreads_2nd):0;
     fprintf(to, "SN\taverage length:\t%.0f\n", avg_read_length);
@@ -1354,10 +1354,10 @@ void output_stats(FILE *to, stats_t *stats, int sparse)
     fprintf(to, "SN\taverage quality:\t%.1f\n", stats->total_len?stats->sum_qual/stats->total_len:0);
     fprintf(to, "SN\tinsert size average:\t%.1f\n", avg_isize);
     fprintf(to, "SN\tinsert size standard deviation:\t%.1f\n", sd_isize);
-    fprintf(to, "SN\tinward oriented pairs:\t%ld\n", (long)nisize_inward);
-    fprintf(to, "SN\toutward oriented pairs:\t%ld\n", (long)nisize_outward);
-    fprintf(to, "SN\tpairs with other orientation:\t%ld\n", (long)nisize_other);
-    fprintf(to, "SN\tpairs on different chromosomes:\t%ld\n", (long)stats->nreads_anomalous/2);
+    fprintf(to, "SN\tinward oriented pairs:\t%lld\n", (long long)nisize_inward);
+    fprintf(to, "SN\toutward oriented pairs:\t%lld\n", (long long)nisize_outward);
+    fprintf(to, "SN\tpairs with other orientation:\t%lld\n", (long long)nisize_other);
+    fprintf(to, "SN\tpairs on different chromosomes:\t%lld\n", (long long)stats->nreads_anomalous/2);
     fprintf(to, "SN\tpercentage of properly paired reads (%%):\t%.1f\n", (stats->nreads_1st+stats->nreads_2nd)? (float)(100*stats->nreads_properly_paired)/(stats->nreads_1st+stats->nreads_2nd):0);
     if ( stats->target_count ) {
         fprintf(to, "SN\tbases inside the target:\t%u\n", stats->target_count);
@@ -1376,7 +1376,7 @@ void output_stats(FILE *to, stats_t *stats, int sparse)
         fprintf(to, "FFQ\t%d",ibase+1);
         for (iqual=0; iqual<=stats->max_qual; iqual++)
         {
-            fprintf(to, "\t%ld", (long)stats->quals_1st[ibase*stats->nquals+iqual]);
+            fprintf(to, "\t%lld", (long long)stats->quals_1st[ibase*stats->nquals+iqual]);
         }
         fprintf(to, "\n");
     }
@@ -1387,7 +1387,7 @@ void output_stats(FILE *to, stats_t *stats, int sparse)
         fprintf(to, "LFQ\t%d",ibase+1);
         for (iqual=0; iqual<=stats->max_qual; iqual++)
         {
-            fprintf(to, "\t%ld", (long)stats->quals_2nd[ibase*stats->nquals+iqual]);
+            fprintf(to, "\t%lld", (long long)stats->quals_2nd[ibase*stats->nquals+iqual]);
         }
         fprintf(to, "\n");
     }
@@ -1401,7 +1401,7 @@ void output_stats(FILE *to, stats_t *stats, int sparse)
             fprintf(to, "MPC\t%d",ibase+1);
             for (iqual=0; iqual<=stats->max_qual; iqual++)
             {
-                fprintf(to, "\t%ld", (long)stats->mpc_buf[ibase*stats->nquals+iqual]);
+                fprintf(to, "\t%lld", (long long)stats->mpc_buf[ibase*stats->nquals+iqual]);
             }
             fprintf(to, "\n");
         }
@@ -1411,7 +1411,7 @@ void output_stats(FILE *to, stats_t *stats, int sparse)
     for (ibase=0; ibase<stats->ngc; ibase++)
     {
         if ( stats->gc_1st[ibase]==stats->gc_1st[ibase_prev] ) continue;
-        fprintf(to, "GCF\t%.2f\t%ld\n", (ibase+ibase_prev)*0.5*100./(stats->ngc-1), (long)stats->gc_1st[ibase_prev]);
+        fprintf(to, "GCF\t%.2f\t%lld\n", (ibase+ibase_prev)*0.5*100./(stats->ngc-1), (long long)stats->gc_1st[ibase_prev]);
         ibase_prev = ibase;
     }
     fprintf(to, "# GC Content of last fragments. Use `grep ^GCL | cut -f 2-` to extract this part.\n");
@@ -1419,7 +1419,7 @@ void output_stats(FILE *to, stats_t *stats, int sparse)
     for (ibase=0; ibase<stats->ngc; ibase++)
     {
         if ( stats->gc_2nd[ibase]==stats->gc_2nd[ibase_prev] ) continue;
-        fprintf(to, "GCL\t%.2f\t%ld\n", (ibase+ibase_prev)*0.5*100./(stats->ngc-1), (long)stats->gc_2nd[ibase_prev]);
+        fprintf(to, "GCL\t%.2f\t%lld\n", (ibase+ibase_prev)*0.5*100./(stats->ngc-1), (long long)stats->gc_2nd[ibase_prev]);
         ibase_prev = ibase;
     }
     fprintf(to, "# ACGT content per cycle. Use `grep ^GCC | cut -f 2-` to extract this part. The columns are: cycle; A,C,G,T base counts as a percentage of all A/C/G/T bases [%%]; and N and O counts as a percentage of all A/C/G/T bases [%%]\n");
@@ -1473,11 +1473,11 @@ void output_stats(FILE *to, stats_t *stats, int sparse)
     }
     fprintf(to, "# Insert sizes. Use `grep ^IS | cut -f 2-` to extract this part. The columns are: insert size, pairs total, inward oriented pairs, outward oriented pairs, other pairs\n");
     for (isize=0; isize<ibulk; isize++) {
-        long in = (long)(stats->isize->inward(stats->isize->data, isize));
-        long out = (long)(stats->isize->outward(stats->isize->data, isize));
-        long other = (long)(stats->isize->other(stats->isize->data, isize));
+        long long in = (long long)(stats->isize->inward(stats->isize->data, isize));
+        long long out = (long long)(stats->isize->outward(stats->isize->data, isize));
+        long long other = (long long)(stats->isize->other(stats->isize->data, isize));
         if (!sparse || in + out + other > 0) {
-            fprintf(to, "IS\t%d\t%ld\t%ld\t%ld\t%ld\n", isize,  in+out+other,
+            fprintf(to, "IS\t%d\t%lld\t%lld\t%lld\t%lld\n", isize,  in+out+other,
                 in , out, other);
         }
     }
@@ -1487,21 +1487,21 @@ void output_stats(FILE *to, stats_t *stats, int sparse)
     for (ilen=0; ilen<stats->max_len; ilen++)
     {
         if ( stats->read_lengths[ilen+1]>0 )
-            fprintf(to, "RL\t%d\t%ld\n", ilen+1, (long)stats->read_lengths[ilen+1]);
+            fprintf(to, "RL\t%d\t%lld\n", ilen+1, (long long)stats->read_lengths[ilen+1]);
     }
 
     fprintf(to, "# Read lengths - first fragments. Use `grep ^FRL | cut -f 2-` to extract this part. The columns are: read length, count\n");
     for (ilen=0; ilen<stats->max_len_1st; ilen++)
     {
         if ( stats->read_lengths_1st[ilen+1]>0 )
-            fprintf(to, "FRL\t%d\t%ld\n", ilen+1, (long)stats->read_lengths_1st[ilen+1]);
+            fprintf(to, "FRL\t%d\t%lld\n", ilen+1, (long long)stats->read_lengths_1st[ilen+1]);
     }
 
     fprintf(to, "# Read lengths - last fragments. Use `grep ^LRL | cut -f 2-` to extract this part. The columns are: read length, count\n");
     for (ilen=0; ilen<stats->max_len_2nd; ilen++)
     {
         if ( stats->read_lengths_2nd[ilen+1]>0 )
-            fprintf(to, "LRL\t%d\t%ld\n", ilen+1, (long)stats->read_lengths_2nd[ilen+1]);
+            fprintf(to, "LRL\t%d\t%lld\n", ilen+1, (long long)stats->read_lengths_2nd[ilen+1]);
     }
 
     fprintf(to, "# Indel distribution. Use `grep ^ID | cut -f 2-` to extract this part. The columns are: length, number of insertions, number of deletions\n");
@@ -1509,7 +1509,7 @@ void output_stats(FILE *to, stats_t *stats, int sparse)
     for (ilen=0; ilen<stats->nindels; ilen++)
     {
         if ( stats->insertions[ilen]>0 || stats->deletions[ilen]>0 )
-            fprintf(to, "ID\t%d\t%ld\t%ld\n", ilen+1, (long)stats->insertions[ilen], (long)stats->deletions[ilen]);
+            fprintf(to, "ID\t%d\t%lld\t%lld\n", ilen+1, (long long)stats->insertions[ilen], (long long)stats->deletions[ilen]);
     }
 
     fprintf(to, "# Indels per cycle. Use `grep ^IC | cut -f 2-` to extract this part. The columns are: cycle, number of insertions (fwd), .. (rev) , number of deletions (fwd), .. (rev)\n");
@@ -1518,17 +1518,17 @@ void output_stats(FILE *to, stats_t *stats, int sparse)
         // For deletions we print the index of the cycle before the deleted base (1-based) and for insertions
         //  the index of the cycle of the first inserted base (also 1-based)
         if ( stats->ins_cycles_1st[ilen]>0 || stats->ins_cycles_2nd[ilen]>0 || stats->del_cycles_1st[ilen]>0 || stats->del_cycles_2nd[ilen]>0 )
-            fprintf(to, "IC\t%d\t%ld\t%ld\t%ld\t%ld\n", ilen+1, (long)stats->ins_cycles_1st[ilen], (long)stats->ins_cycles_2nd[ilen], (long)stats->del_cycles_1st[ilen], (long)stats->del_cycles_2nd[ilen]);
+            fprintf(to, "IC\t%d\t%lld\t%lld\t%lld\t%lld\n", ilen+1, (long long)stats->ins_cycles_1st[ilen], (long long)stats->ins_cycles_2nd[ilen], (long long)stats->del_cycles_1st[ilen], (long long)stats->del_cycles_2nd[ilen]);
     }
 
     fprintf(to, "# Coverage distribution. Use `grep ^COV | cut -f 2-` to extract this part.\n");
     if  ( stats->cov[0] )
-        fprintf(to, "COV\t[<%d]\t%d\t%ld\n",stats->info->cov_min,stats->info->cov_min-1, (long)stats->cov[0]);
+        fprintf(to, "COV\t[<%d]\t%d\t%lld\n",stats->info->cov_min,stats->info->cov_min-1, (long long)stats->cov[0]);
     for (icov=1; icov<stats->ncov-1; icov++)
         if ( stats->cov[icov] )
-            fprintf(to, "COV\t[%d-%d]\t%d\t%ld\n",stats->info->cov_min + (icov-1)*stats->info->cov_step, stats->info->cov_min + icov*stats->info->cov_step-1,stats->info->cov_min + icov*stats->info->cov_step-1, (long)stats->cov[icov]);
+            fprintf(to, "COV\t[%d-%d]\t%d\t%lld\n",stats->info->cov_min + (icov-1)*stats->info->cov_step, stats->info->cov_min + icov*stats->info->cov_step-1,stats->info->cov_min + icov*stats->info->cov_step-1, (long long)stats->cov[icov]);
     if ( stats->cov[stats->ncov-1] )
-        fprintf(to, "COV\t[%d<]\t%d\t%ld\n",stats->info->cov_min + (stats->ncov-2)*stats->info->cov_step-1,stats->info->cov_min + (stats->ncov-2)*stats->info->cov_step-1, (long)stats->cov[stats->ncov-1]);
+        fprintf(to, "COV\t[%d<]\t%d\t%lld\n",stats->info->cov_min + (stats->ncov-2)*stats->info->cov_step-1,stats->info->cov_min + (stats->ncov-2)*stats->info->cov_step-1, (long long)stats->cov[stats->ncov-1]);
 
     // Calculate average GC content, then sort by GC and depth
     fprintf(to, "# GC-depth. Use `grep ^GCD | cut -f 2-` to extract this part. The columns are: GC%%, unique sequence percentiles, 10th, 25th, 50th, 75th and 90th depth percentile\n");

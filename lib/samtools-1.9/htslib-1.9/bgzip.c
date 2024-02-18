@@ -96,7 +96,7 @@ int main(int argc, char **argv)
     int c, compress, compress_level = -1, pstdout, is_forced, test, index = 0, rebgzip = 0, reindex = 0;
     BGZF *fp;
     void *buffer;
-    long start, end, size;
+    long long start, end, size;
     char *index_fname = NULL;
     int threads = 1;
 

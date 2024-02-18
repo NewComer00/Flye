@@ -1334,7 +1334,7 @@ int sam_parse1(kstring_t *s, bam_hdr_t *h, bam1_t *b)
             kputc_(*q, &str);
         } else if (type == 'i' || type == 'I') {
             if (*q == '-') {
-                long x = strtol(q, &q, 10);
+                long long x = strtol(q, &q, 10);
                 if (x >= INT8_MIN) {
                     kputc_('c', &str); kputc_(x, &str);
                 } else if (x >= INT16_MIN) {
@@ -1347,7 +1347,7 @@ int sam_parse1(kstring_t *s, bam_hdr_t *h, bam1_t *b)
                     str.l += 4;
                 }
             } else {
-                unsigned long x = strtoul(q, &q, 10);
+                unsigned long long x = strtoul(q, &q, 10);
                 if (x <= UINT8_MAX) {
                     kputc_('C', &str); kputc_(x, &str);
                 } else if (x <= UINT16_MAX) {
@@ -2152,7 +2152,7 @@ char *sam_open_mode_opts(const char *fn,
 int bam_str2flag(const char *str)
 {
     char *end, *beg = (char*) str;
-    long int flag = strtol(str, &end, 0);
+    long long int flag = strtol(str, &end, 0);
     if ( end!=str ) return flag;    // the conversion was successful
     flag = 0;
     while ( *str )

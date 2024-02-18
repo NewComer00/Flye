@@ -236,7 +236,7 @@ static char *expand_path(char *file, char *dirname) {
         *path = 0;
         while ((cp = strchr(dirname, '%'))) {
             char *endp;
-            long l = strtol(cp+1, &endp, 10);
+            long long l = strtol(cp+1, &endp, 10);
             if (*endp != 's') {
                 strncpy(path_end, dirname, (endp+1)-dirname);
                 path_end += (endp+1)-dirname;

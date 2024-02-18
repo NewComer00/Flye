@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     kstream_t *ks;
     kstring_t s, t[N_TMPSTR];
     int dret, i, k, af_n, af_max, af_i, c, is_padded = 0, write_cns = 0, *p2u = 0;
-    long m_cigar = 0, n_cigar = 0;
+    long long m_cigar = 0, n_cigar = 0;
     unsigned *af, *cigar = 0;
 
     while ((c = getopt(argc, argv, "pc")) >= 0) {

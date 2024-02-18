@@ -115,7 +115,7 @@ struct hts_md5_context {
  * This processes one or more 64-byte data blocks, but does NOT update
  * the bit counters.  There are no alignment requirements.
  */
-static const void *body(hts_md5_context *ctx, const void *data, unsigned long size)
+static const void *body(hts_md5_context *ctx, const void *data, unsigned long long size)
 {
 	const unsigned char *ptr;
 	hts_md5_u32plus a, b, c, d;
@@ -233,10 +233,10 @@ void hts_md5_reset(hts_md5_context *ctx)
 	ctx->hi = 0;
 }
 
-void hts_md5_update(hts_md5_context *ctx, const void *data, unsigned long size)
+void hts_md5_update(hts_md5_context *ctx, const void *data, unsigned long long size)
 {
 	hts_md5_u32plus saved_lo;
-	unsigned long used, available;
+	unsigned long long used, available;
 
 	saved_lo = ctx->lo;
 	if ((ctx->lo = (saved_lo + size) & 0x1fffffff) < saved_lo)
@@ -260,7 +260,7 @@ void hts_md5_update(hts_md5_context *ctx, const void *data, unsigned long size)
 	}
 
 	if (size >= 64) {
-		data = body(ctx, data, size & ~(unsigned long)0x3f);
+		data = body(ctx, data, size & ~(unsigned long long)0x3f);
 		size &= 0x3f;
 	}
 
@@ -269,7 +269,7 @@ void hts_md5_update(hts_md5_context *ctx, const void *data, unsigned long size)
 
 void hts_md5_final(unsigned char *result, hts_md5_context *ctx)
 {
-	unsigned long used, available;
+	unsigned long long used, available;
 
 	used = ctx->lo & 0x3f;
 
@@ -356,7 +356,7 @@ void hts_md5_reset(hts_md5_context *ctx)
     MD5_Init((MD5_CTX *)ctx);
 }
 
-void hts_md5_update(hts_md5_context *ctx, const void *data, unsigned long size)
+void hts_md5_update(hts_md5_context *ctx, const void *data, unsigned long long size)
 {
     MD5_Update((MD5_CTX *)ctx, data, size);
 }

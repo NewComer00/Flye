@@ -29,7 +29,7 @@ DEALINGS IN THE SOFTWARE.  */
 
 static inline int bam_is_big_endian()
 {
-    long one= 1;
+    long long one= 1;
     return !(*((char *)(&one)));
 }
 static inline uint16_t bam_swap_endian_2(uint16_t v)

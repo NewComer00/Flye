@@ -212,11 +212,11 @@ static inline int kputuw(unsigned c, kstring_t *s)
 	return 0;
 }
 
-static inline int kputl(long c, kstring_t *s)
+static inline int kputl(long long c, kstring_t *s)
 {
 	char buf[32];
 	int i, l = 0;
-	unsigned long x = c;
+	unsigned long long x = c;
 	if (c < 0) x = -x;
 	do { buf[l++] = x%10 + '0'; x /= 10; } while (x > 0);
 	if (c < 0) buf[l++] = '-';

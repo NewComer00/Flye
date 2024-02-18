@@ -56,13 +56,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define KBS_ELTBITS (CHAR_BIT * sizeof (unsigned long))
+#define KBS_ELTBITS (CHAR_BIT * sizeof (unsigned long long))
 #define KBS_ELT(i)  ((i) / KBS_ELTBITS)
 #define KBS_MASK(i) (1UL << ((i) % KBS_ELTBITS))
 
 typedef struct kbitset_t {
 	size_t n;
-	unsigned long b[1];
+	unsigned long long b[1];
 } kbitset_t;
 
 // Initialise a bit set capable of holding ni integers, 0 <= i < ni.
@@ -71,10 +71,10 @@ static inline kbitset_t *kbs_init2(size_t ni, int fill)
 {
 	size_t n = (ni + KBS_ELTBITS-1) / KBS_ELTBITS;
 	kbitset_t *bs =
-		(kbitset_t *) malloc(sizeof(kbitset_t) + n * sizeof(unsigned long));
+		(kbitset_t *) malloc(sizeof(kbitset_t) + n * sizeof(unsigned long long));
 	if (bs == NULL) return NULL;
 	bs->n = n;
-	memset(bs->b, fill? ~0 : 0, n * sizeof (unsigned long));
+	memset(bs->b, fill? ~0 : 0, n * sizeof (unsigned long long));
 	bs->b[n] = ~0UL;
 	return bs;
 }
@@ -94,13 +94,13 @@ static inline void kbs_destroy(kbitset_t *bs)
 // Reset the bit set to empty.
 static inline void kbs_clear(kbitset_t *bs)
 {
-	memset(bs->b, 0, bs->n * sizeof (unsigned long));
+	memset(bs->b, 0, bs->n * sizeof (unsigned long long));
 }
 
 // Reset the bit set to all of [0,ni).
 static inline void kbs_insert_all(kbitset_t *bs)
 {
-	memset(bs->b, ~0, bs->n * sizeof (unsigned long));
+	memset(bs->b, ~0, bs->n * sizeof (unsigned long long));
 }
 
 // Insert an element into the bit set.
@@ -122,7 +122,7 @@ static inline int kbs_exists(const kbitset_t *bs, int i)
 }
 
 typedef struct kbitset_iter_t {
-	unsigned long mask;
+	unsigned long long mask;
 	size_t elt;
 	int i;
 } kbitset_iter_t;
@@ -138,7 +138,7 @@ static inline void kbs_start(kbitset_iter_t *itr)
 // Return the next element contained in the bit set, or -1 if there are no more.
 static inline int kbs_next(const kbitset_t *bs, kbitset_iter_t *itr)
 {
-	unsigned long b = bs->b[itr->elt];
+	unsigned long long b = bs->b[itr->elt];
 
 	for (;;) {
 		if (itr->mask == 0) {

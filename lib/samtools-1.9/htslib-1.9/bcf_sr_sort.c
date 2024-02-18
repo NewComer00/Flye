@@ -42,10 +42,10 @@ static inline kbitset_t *kbs_resize(kbitset_t *bs, size_t ni)
     size_t n = (ni + KBS_ELTBITS-1) / KBS_ELTBITS;
     if ( n==bs->n ) return bs;
 
-    bs = (kbitset_t *) realloc(bs, sizeof(kbitset_t) + n * sizeof(unsigned long));
+    bs = (kbitset_t *) realloc(bs, sizeof(kbitset_t) + n * sizeof(unsigned long long));
     if ( bs==NULL ) return NULL;
     if ( n > bs->n )
-        memset(bs->b + bs->n, 0, (n - bs->n) * sizeof (unsigned long));
+        memset(bs->b + bs->n, 0, (n - bs->n) * sizeof (unsigned long long));
     bs->n = n;
     bs->b[n] = ~0UL;
     return bs;

@@ -138,7 +138,7 @@ static int http_status_errno(int status)
 
 static int easy_errno(CURL *easy, CURLcode err)
 {
-    long lval;
+    long long lval;
 
     switch (err) {
     case CURLE_OK:
@@ -434,7 +434,7 @@ static int read_auth_json(auth_token *tok, hFILE *auth_fp) {
     free(tok->token);
     tok->token = ks_release(&str);
     if (expiry) {
-        long exp = strtol(expiry, NULL, 10);
+        long long exp = strtol(expiry, NULL, 10);
         if (exp < 0) exp = 0;
         tok->expiry = time(NULL) + exp;
     } else {
@@ -676,7 +676,7 @@ static int wait_perform(hFILE_libcurl *fp)
 {
     fd_set rd, wr, ex;
     int maxfd, nrunning;
-    long timeout;
+    long long timeout;
     CURLMcode errm;
 
     if (!fp->perform_again) {

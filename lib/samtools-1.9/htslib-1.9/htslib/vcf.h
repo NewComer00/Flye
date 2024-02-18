@@ -945,7 +945,7 @@ static inline void bcf_enc_size(kstring_t *s, int size, int type)
     } else kputc(size<<4|type, s);
 }
 
-static inline int bcf_enc_inttype(long x)
+static inline int bcf_enc_inttype(long long x)
 {
     if (x <= INT8_MAX && x > bcf_int8_missing) return BCF_BT_INT8;
     if (x <= INT16_MAX && x > bcf_int16_missing) return BCF_BT_INT16;

@@ -26,10 +26,10 @@ DEALINGS IN THE SOFTWARE.  */
 #ifndef HTSLIB_HTS_OS_H
 #define HTSLIB_HTS_OS_H
 
-extern void hts_srand48(long seed);
+extern void hts_srand48(long long seed);
 extern double hts_erand48(unsigned short xseed[3]);
 extern double hts_drand48(void);
-extern long hts_lrand48(void);
+extern long long hts_lrand48(void);
 
 #if defined(_WIN32) && !defined(__CYGWIN__)
 // Windows usually lacks *rand48(), but cygwin provides them.

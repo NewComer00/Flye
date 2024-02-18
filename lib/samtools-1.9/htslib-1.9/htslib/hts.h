@@ -784,7 +784,7 @@ int probaln_glocal(const uint8_t *ref, int l_ref, const uint8_t *query, int l_qu
     hts_md5_context *hts_md5_init(void);
 
     /*! @abstract Updates the context with the MD5 of the data. */
-    void hts_md5_update(hts_md5_context *ctx, const void *data, unsigned long size);
+    void hts_md5_update(hts_md5_context *ctx, const void *data, unsigned long long size);
 
     /*! @abstract Computes the final 128-bit MD5 hash from the given context */
     void hts_md5_final(unsigned char *digest, hts_md5_context *ctx);
@@ -824,7 +824,7 @@ static inline int hts_bin_bot(int bin, int n_lvls)
 
 static inline int ed_is_big(void)
 {
-    long one= 1;
+    long long one= 1;
     return !(*((char *)(&one)));
 }
 static inline uint16_t ed_swap_2(uint16_t v)

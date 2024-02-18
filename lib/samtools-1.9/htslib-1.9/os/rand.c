@@ -45,15 +45,15 @@ static unsigned short _rand48_add = RAND48_ADD;
 static void
 _dorand48(unsigned short xseed[3])
 {
-	unsigned long accu;
+	unsigned long long accu;
 	unsigned short temp[2];
 
-	accu = (unsigned long) _rand48_mult[0] * (unsigned long) xseed[0] +
-	 (unsigned long) _rand48_add;
+	accu = (unsigned long long) _rand48_mult[0] * (unsigned long long) xseed[0] +
+	 (unsigned long long) _rand48_add;
 	temp[0] = (unsigned short) accu;	/* lower 16 bits */
 	accu >>= sizeof(unsigned short) * 8;
-	accu += (unsigned long) _rand48_mult[0] * (unsigned long) xseed[1] +
-	 (unsigned long) _rand48_mult[1] * (unsigned long) xseed[0];
+	accu += (unsigned long long) _rand48_mult[0] * (unsigned long long) xseed[1] +
+	 (unsigned long long) _rand48_mult[1] * (unsigned long long) xseed[0];
 	temp[1] = (unsigned short) accu;	/* middle 16 bits */
 	accu >>= sizeof(unsigned short) * 8;
 	accu += _rand48_mult[0] * xseed[2] + _rand48_mult[1] * xseed[1] + _rand48_mult[2] * xseed[0];
@@ -63,7 +63,7 @@ _dorand48(unsigned short xseed[3])
 }
 
 void
-hts_srand48(long seed)
+hts_srand48(long long seed)
 {
 	_rand48_seed[0] = RAND48_SEED_0;
 	_rand48_seed[1] = (unsigned short) seed;
@@ -89,9 +89,9 @@ hts_drand48(void)
 	return hts_erand48(_rand48_seed);
 }
 
-long
+long long
 hts_lrand48(void)
 {
 	_dorand48(_rand48_seed);
-	return ((long) _rand48_seed[2] << 15) + ((long) _rand48_seed[1] >> 1);
+	return ((long long) _rand48_seed[2] << 15) + ((long long) _rand48_seed[1] >> 1);
 }

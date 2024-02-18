@@ -312,7 +312,7 @@ static unsigned LZ4_NbCommonBytes (register reg_t val)
     if (LZ4_isLittleEndian()) {
         if (sizeof(val)==8) {
 #       if defined(_MSC_VER) && defined(_WIN64) && !defined(LZ4_FORCE_SW_BITCOUNT)
-            unsigned long r = 0;
+            unsigned long long r = 0;
             _BitScanForward64( &r, (U64)val );
             return (int)(r>>3);
 #       elif (defined(__clang__) || (defined(__GNUC__) && (__GNUC__>=3))) && !defined(LZ4_FORCE_SW_BITCOUNT)
@@ -323,7 +323,7 @@ static unsigned LZ4_NbCommonBytes (register reg_t val)
 #       endif
         } else /* 32 bits */ {
 #       if defined(_MSC_VER) && !defined(LZ4_FORCE_SW_BITCOUNT)
-            unsigned long r;
+            unsigned long long r;
             _BitScanForward( &r, (U32)val );
             return (int)(r>>3);
 #       elif (defined(__clang__) || (defined(__GNUC__) && (__GNUC__>=3))) && !defined(LZ4_FORCE_SW_BITCOUNT)
@@ -336,7 +336,7 @@ static unsigned LZ4_NbCommonBytes (register reg_t val)
     } else   /* Big Endian CPU */ {
         if (sizeof(val)==8) {
 #       if defined(_MSC_VER) && defined(_WIN64) && !defined(LZ4_FORCE_SW_BITCOUNT)
-            unsigned long r = 0;
+            unsigned long long r = 0;
             _BitScanReverse64( &r, val );
             return (unsigned)(r>>3);
 #       elif (defined(__clang__) || (defined(__GNUC__) && (__GNUC__>=3))) && !defined(LZ4_FORCE_SW_BITCOUNT)
@@ -350,8 +350,8 @@ static unsigned LZ4_NbCommonBytes (register reg_t val)
 #       endif
         } else /* 32 bits */ {
 #       if defined(_MSC_VER) && !defined(LZ4_FORCE_SW_BITCOUNT)
-            unsigned long r = 0;
-            _BitScanReverse( &r, (unsigned long)val );
+            unsigned long long r = 0;
+            _BitScanReverse( &r, (unsigned long long)val );
             return (unsigned)(r>>3);
 #       elif (defined(__clang__) || (defined(__GNUC__) && (__GNUC__>=3))) && !defined(LZ4_FORCE_SW_BITCOUNT)
             return (__builtin_clz((U32)val) >> 3);

@@ -189,7 +189,7 @@ inline size_t getCurrentRSS( )
 
 #elif defined(__linux__) || defined(__linux) || defined(linux) || defined(__gnu_linux__)
 	/* Linux ---------------------------------------------------- */
-	long rss = 0L;
+	long long rss = 0LL;
 	FILE* fp = NULL;
 	if ( (fp = fopen( "/proc/self/statm", "r" )) == NULL )
 		return (size_t)0L;		/* Can't open? */
