@@ -38,6 +38,14 @@ cd Flye-win32
 make
 ```
 
+All the executables are statically built for the easy distribution of the app. Strip the executables to reduce their size
+```sh
+ls -alh bin/
+
+strip bin/flye-*
+ls -alh bin/
+```
+
 Running in MSYS2
 ------------------
 
