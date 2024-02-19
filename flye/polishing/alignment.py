@@ -276,7 +276,9 @@ def _run_minimap(reference_file, reads_files, num_proc, reads_type, out_file):
     #logger.debug("Running: " + " ".join(cmdline))
     try:
         devnull = open(os.devnull, "wb")
-        subprocess.check_call(["bash", "-c",
+        #TODO: On MSYS2/Cygwin, 'sh' is just 'bash'. We use 'sh' instead of 'bash' in case that 'bash' command from MSYS2 is overshadowed by the one from WSL.
+        bash_executable = os.environ['BASH'] if 'BASH' in os.environ else 'sh'
+        subprocess.check_call([bash_executable, "-c",
                               "set -eo pipefail; " + " ".join(cmdline)],
                               stderr=open(stderr_file, "w"),
                               stdout=open(os.devnull, "w"))

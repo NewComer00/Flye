@@ -1,15 +1,22 @@
 Flye-win32
 ==============
 
+A Windows x64 port of [fenderglass/Flye](https://github.com/fenderglass/Flye).
+
+Known Bugs
+----------
+
+- [Under Investigation] `exit status 3221226356` (0xC0000374 STATUS_HEAP_CORRUPTION) may appear during the program's running. Try specify fewer threads and execute the program again.
+
 Building Requirements
 ---------------------
 
-* MSYS2 UCRT64 environment
-* Python 2.7 or 3.5+
-* C++ compiler with C++11 support
-* GNU make
-* Git
-* Core OS development headers (zlib, dlfcn, ...)
+* [**MSYS2 UCRT64**](https://www.msys2.org/) environment with:
+    * Python 2.7 or 3.5+
+    * C++ compiler with C++11 support
+    * GNU make
+    * Git
+    * Core OS development headers (zlib, dlfcn, ...)
 
 Building with MSYS2
 -------------------
@@ -31,7 +38,7 @@ cd Flye-win32
 make
 ```
 
-Running with MSYS2
+Running in MSYS2
 ------------------
 
 Then, Flye will be available as
@@ -44,12 +51,27 @@ Optionally, run some tests to ensure that installation was successful
 python flye/tests/test_toy.py
 ```
 
-Running on Native Windows
+Running in PowerShell
 -------------------------
 
-**IMPORTANT**: Please ensure `python.exe` and `bash.exe` is in the *PATH*. The former is available on [www.python.org](https://www.python.org), and the latter could be found in `MSYS2`, `Cygwin`, `Git for Windows`, `MSYS` or even `WSL/WSL2`.
+First, open `PowerShell` and get into the built `Flye-win32` repo
+```powershell
+cd "your_msys64\some_path\Flye-win32\"
+```
 
-Run Flye on `PowerShell` or `CMD`
+Set the environment variable `BASH` for the current session. For example
+```powershell
+$env:BASH="your_msys64\usr\bin\bash.exe"
+```
+
+**OPTIONAL**: To distribute this app with ease, you could copy the `bash.exe` and its deps into a custom directory like `Flye-win32\bin`:
+```powershell
+cp "your_msys64\usr\bin\bash.exe" .\bin
+cp "your_msys64\usr\bin\msys-2.0.dll" .\bin
+$env:BASH=".\bin\bash.exe"
+```
+
+Run Flye ([`Python`](https://www.python.org/downloads/windows/) should be installed on Windows first)
 ```powershell
 python bin\flye
 ```
