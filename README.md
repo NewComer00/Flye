@@ -72,16 +72,6 @@ Run the test
 python flye\tests\test_toy.py
 ```
 
-Creating Python Wheel
----------------------
-
-Get inside your `MSYS2 UCRT64` environment and enter the `Flye-win32` repo. Create a Python wheel of `flye` package
-```sh
-pip wheel . -v
-```
-
-The wheel file will be generated under your current working directory. It is a valid wheel for both Python in MSYS2 UCRT64 and Python on Windows.
-
 <details>
 <summary>Show the log of test script on PowerShell</summary>
 
@@ -162,6 +152,17 @@ PS D:\msys64\home\AI\Flye-win32>
 
 </details>
 
+Creating Python Wheel
+---------------------
+
+Get inside your `MSYS2 UCRT64` environment and enter the `Flye-win32` repo. Create a Python wheel of `flye` package
+```sh
+pip wheel . -v
+```
+
+The wheel file will be generated under your current working directory. It is a valid wheel for both Python in MSYS2 UCRT64 and Python on Windows.
+
+--------------------------------------------------------------------------------
 
 Flye assembler
 ==============
