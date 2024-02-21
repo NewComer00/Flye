@@ -24,6 +24,7 @@ endif
 ${BIN_DIR}/flye-minimap2:
 	make -C ${MINIMAP2_DIR} -j ${THREADS}
 	cp ${MINIMAP2_DIR}/minimap2 ${BIN_DIR}/flye-minimap2
+	strip ${BIN_DIR}/flye-minimap2.exe
 
 minimap2: ${BIN_DIR}/flye-minimap2
 
@@ -33,6 +34,7 @@ ${BIN_DIR}/flye-samtools:
 	cd ${SAMTOOLS_DIR} && ./configure --without-curses --disable-bz2 --disable-lzma --enable-plugins
 	make samtools -C ${SAMTOOLS_DIR} -j ${THREADS}
 	cp ${SAMTOOLS_DIR}/samtools ${BIN_DIR}/flye-samtools
+	strip ${BIN_DIR}/flye-samtools.exe
 
 all: minimap2 samtools
 	make release -C src -j ${THREADS}

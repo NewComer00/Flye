@@ -57,6 +57,7 @@ polishing/%.o: polishing/%.cpp bin/polisher.cpp polishing/*.h common/*h
 main_obj := main.o
 flye-modules: ${assemble_obj} ${sequence_obj} ${repeat_obj} ${contigger_obj} ${polish_obj} ${main_obj}
 	${CXX} ${assemble_obj} ${sequence_obj} ${repeat_obj} ${contigger_obj} ${polish_obj} ${main_obj} -o ${MODULES_BIN} ${LDFLAGS}
+	strip ${MODULES_BIN}.exe
 
 #main/%.o: main/%.cpp assemble/*.h sequence/*.h common/*.h repeat_graph/*.h contigger/*.h polishing/*.h
 main.o: main.cpp

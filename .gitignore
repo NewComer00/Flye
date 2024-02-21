@@ -5,6 +5,7 @@
 *.so
 *.DS_Store
 *.egg-info
+*.whl
 build
 dist
 tags
