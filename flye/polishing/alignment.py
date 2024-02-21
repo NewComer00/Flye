@@ -245,8 +245,8 @@ def _run_minimap(reference_file, reads_files, num_proc, reads_type, out_file):
         mode = "map-ont"
         extra_args = ["-k", "17"]
 
-    cmdline = [MINIMAP_BIN, "'" + reference_file + "'"]
-    cmdline.extend(["'" + read_file + "'" for read_file in reads_files])
+    cmdline = [MINIMAP_BIN, reference_file]
+    cmdline.extend([read_file for read_file in reads_files])
     cmdline.extend(["-x", mode, "-t", str(num_proc)])
     cmdline.extend(extra_args)
 
@@ -265,23 +265,23 @@ def _run_minimap(reference_file, reads_files, num_proc, reads_type, out_file):
                               "sort_" + datetime.datetime.now().strftime("%y%m%d_%H%M%S"))
     cmdline.extend(["-a", "-p", "0.5", "-N", "10", "--sam-hit-only", "-L", "-K", BATCH,
                     "-z", "1000", "-Q", "--secondary-seq", "-I", "64G"])
-    cmdline.extend(["|", SAMTOOLS_BIN, "view", "-T", "'" + reference_file + "'", "-u", "-o", "'" + tmp_bam + "'"])
-    cmdline.extend(["&&", SAMTOOLS_BIN, "sort", "-T", "'" + tmp_prefix + "'", "-O", "bam",
+    cmdline.extend(["|", SAMTOOLS_BIN, "view", "-T", reference_file, "-u", "-o", tmp_bam])
+    cmdline.extend(["&&", SAMTOOLS_BIN, "sort", "-T", tmp_prefix, "-O", "bam",
                     "-@", SORT_THREADS, "-l", "1", "-m", SORT_MEM])
-    cmdline.extend(["-o", "'" + out_file + "'", "'" + tmp_bam + "'"])
-    cmdline.extend(["&&", SAMTOOLS_BIN, "index", "-@", "4", "'" + out_file + "'"])
+    cmdline.extend(["-o", out_file, tmp_bam])
+    cmdline.extend(["&&", SAMTOOLS_BIN, "index", "-@", "4", out_file])
     fp_tmp_bam.close()
     os.unlink(tmp_bam)
 
     #logger.debug("Running: " + " ".join(cmdline))
     try:
         devnull = open(os.devnull, "wb")
-        #TODO: On MSYS2/Cygwin, 'sh' is just 'bash'. We use 'sh' instead of 'bash' in case that 'bash' command from MSYS2 is overshadowed by the one from WSL.
-        bash_executable = os.environ['BASH'] if 'BASH' in os.environ else 'sh'
-        subprocess.check_call([bash_executable, "-c",
-                              "set -eo pipefail; " + " ".join(cmdline)],
+        # On Windows, the default shell is specified by the COMSPEC environment variable
+        # Usually cmd.exe
+        subprocess.check_call(cmdline,
                               stderr=open(stderr_file, "w"),
-                              stdout=open(os.devnull, "w"))
+                              stdout=open(os.devnull, "w"),
+                              shell=True)
         #os.remove(stderr_file)
 
     except (subprocess.CalledProcessError, OSError) as e:

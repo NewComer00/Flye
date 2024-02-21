@@ -59,24 +59,12 @@ Optionally, run some tests to ensure that installation was successful
 python flye/tests/test_toy.py
 ```
 
-Running in PowerShell
+Running in CMD/PowerShell
 -------------------------
 
-First, open `PowerShell` and get into the built `Flye-win32` repo
+First, open `CMD` or `PowerShell` and get into the built `Flye-win32` repo
 ```powershell
 cd "your_msys64\some_path\Flye-win32\"
-```
-
-Set the environment variable `BASH` for the current session. For example
-```powershell
-$env:BASH="your_msys64\usr\bin\bash.exe"
-```
-
-**OPTIONAL**: To distribute this app with ease, you could copy the `bash.exe` and its deps into a custom directory like `Flye-win32\bin`:
-```powershell
-cp "your_msys64\usr\bin\bash.exe" .\bin
-cp "your_msys64\usr\bin\msys-2.0.dll" .\bin
-$env:BASH=".\bin\bash.exe"
 ```
 
 Run Flye ([`Python`](https://www.python.org/downloads/windows/) should be installed on Windows first)
