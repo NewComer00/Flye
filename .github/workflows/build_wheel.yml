@@ -26,8 +26,9 @@ jobs:
           mingw-w64-ucrt-x86_64-python3-pip
 
     - uses: actions/checkout@v3
+    - name: make
       run: pip wheel . -v
 
     - uses: actions/upload-artifact@v4
       with:
-        path: *.whl
+        path: ~/Flye-win32/*.whl
