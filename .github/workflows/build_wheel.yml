@@ -1,4 +1,4 @@
-name: Build Wheel
+name: Build Flye Wheel for Python3 on Windows
 
 on:
   push:
@@ -26,9 +26,10 @@ jobs:
           mingw-w64-ucrt-x86_64-python3-pip
 
     - uses: actions/checkout@v3
-    - name: make
-      run: pip wheel . -v
+    - name: build
+      run: pip3 wheel . -v
 
     - uses: actions/upload-artifact@v4
       with:
-        path: Flye-win32/*.whl
+        name: flye-wheel
+        path: ./*.whl
