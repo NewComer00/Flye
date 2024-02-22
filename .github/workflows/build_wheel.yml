@@ -1,0 +1,33 @@
+name: Build Wheel
+
+on:
+  push:
+    branches: [ "flye" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: UCRT64
+        update: true
+        install: >-
+          git
+          make
+          mingw-w64-ucrt-x86_64-toolchain
+          mingw-w64-ucrt-x86_64-dlfcn
+          mingw-w64-ucrt-x86_64-python3
+          mingw-w64-ucrt-x86_64-python3-pip
+
+    - uses: actions/checkout@v3
+      run: pip wheel . -v
+
+    - uses: actions/upload-artifact@v4
+      with:
+        path: *.whl
