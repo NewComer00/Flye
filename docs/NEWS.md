@@ -1,3 +1,7 @@
+Flye 2.9.4 release (14 May 2024)
+===============================
+* Minor technical changes
+
 Flye 2.9.3 release (28 November 2023)
 ====================================
 * Disjointig step speedup for `--nano-hq` mode
